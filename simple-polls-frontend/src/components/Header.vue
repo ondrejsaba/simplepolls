@@ -19,7 +19,7 @@
             </li>
 
             <li class="right">
-                <Button class="circle mr-10" @click="setDarkTheme">
+                <Button class="big circle mr-10" @click="setDarkTheme">
                     <template v-slot:text>
                         {{ themeIcon }}
                     </template>
