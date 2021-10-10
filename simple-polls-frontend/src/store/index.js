@@ -1,12 +1,8 @@
 import { createStore } from 'vuex'
+import moduleTheme from './modules/theme.js'
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    theme: moduleTheme
   }
 })

@@ -1,0 +1,32 @@
+// sections
+
+.section-size {
+    width: 50vw;
+    height: auto;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+}
+
+// position
+
+.right {
+    float: right;
+}
+
+// margin and padding
+$properties: margin, padding;
+$directions: top, right, bottom, left;
+$sizes: 0, 5, 10, 15, 20, 25, 30, 40, 50, 100;
+
+@each $property in $properties {
+    @each $direction in $directions {
+        @each $size in $sizes {
+            .#{str-slice($property, 1, 1)}#{str-slice($direction, 1, 1)}-#{$size} {
+                #{$property}-#{$direction}: #{$size}px !important;
+            }
+        }
+    }
+}
