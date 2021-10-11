@@ -1,10 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db')
+const manageModel = require('../models/manageModel')
 
-router.post('/create', (req, res) => {
-    const {question, options, settings} = req.body
-
+const generatePollId = () => {
     const alphabet = [...Array(26).keys()].map(key => String.fromCharCode(key + 97))
     const numbers = [...Array(10).keys()]
     const possibleCharacters = [...alphabet, ...numbers]
@@ -13,12 +11,18 @@ router.post('/create', (req, res) => {
         return possibleCharacters[Math.floor(Math.random() * possibleCharacters.length)]
     }).join("")
 
-    db.run('INSERT INTO polls VALUES (?, ?, ?, ?)', [
-        pollId, question, JSON.stringify(options), JSON.stringify(settings)
-    ], err => {
-        if (err) {
-            console.log(err)
-        }
+    return pollId
+}
+
+router.post('/create', (req, res) => {
+    const {question, options, settings} = req.body
+    const pollId = generatePollId()
+
+    manageModel.createPoll({
+        id: pollId,
+        question: question,
+        options: JSON.stringify(options),
+        settings: JSON.stringify(settings)
     })
 
     res.json({
