@@ -1,6 +1,9 @@
 <template>
     <div
         class="checkbox"
+        :class="{
+            dark: darkTheme
+        }"
         @click="switchCheck"
     >
         <div
@@ -21,6 +24,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: {
         modelValue: Boolean
@@ -35,6 +40,11 @@ export default {
             this.checked = !this.checked
             this.$emit('update:modelValue', this.checked)
         }
+    },
+    computed: {
+        ...mapState('theme', [
+            'darkTheme'
+        ])
     }
 }
 </script>
@@ -71,6 +81,15 @@ export default {
         }
     }
 
+    &.dark .box {
+        background-color: dark(200);
+        border: 1px solid dark(300);
+
+        &.active {
+            background-color: blue(300);
+        }
+    }
+
     .text {
         line-height: 30px;
         vertical-align: top;
@@ -83,6 +102,14 @@ export default {
 
     &:active .box {
         background-color: darken(light(100), 4%);
+    }
+
+    &.dark:hover .box {
+        border: 1px solid dark(400);
+    }
+
+    &.dark:active .box {
+        background-color: darken(dark(200), 2%);
     }
 }
 </style>

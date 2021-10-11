@@ -61,6 +61,7 @@ header {
     border-bottom: 1px solid light(200);
     padding-bottom: 25px;
     background-color: light(100);
+    user-select: none;
 
     ul {
         list-style-type: none;
