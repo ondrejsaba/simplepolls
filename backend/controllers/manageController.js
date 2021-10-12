@@ -14,13 +14,14 @@ const generatePollId = () => {
 
 const manageController = {
     createPoll: (req, res) => {
-        const {question, options, settings} = req.body
+        const {question, options, votes, settings} = req.body
         const pollId = generatePollId()
 
         manageModel.createPoll({
             id: pollId,
             question: question,
             options: JSON.stringify(options),
+            votes: JSON.stringify(votes),
             settings: JSON.stringify(settings)
         })
 

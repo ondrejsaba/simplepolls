@@ -1,9 +1,9 @@
 const db = require('../db')
 
 const manageModel = {
-    createPoll: ({id, question, options, settings}) => {
-        db.run('INSERT INTO polls VALUES (?, ?, ?, ?)', [
-            id, question, options, settings
+    createPoll: ({id, question, options, votes, settings}) => {
+        db.run('INSERT INTO polls(id, question, options, votes, settings) VALUES (?, ?, ?, ?, ?)', [
+            id, question, options, votes, settings
         ], err => {
             if (err) {
                 console.log(err)

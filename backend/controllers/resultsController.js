@@ -10,7 +10,7 @@ const resultsController = {
         const { id } = req.params
 
         res.json({
-            results: await resultsModel.getResults({id: id})
+            results: await resultsModel.getResults({id})
         })
     }
 }
