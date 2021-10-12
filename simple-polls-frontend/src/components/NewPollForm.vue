@@ -61,9 +61,7 @@
 
             <div id="new-poll-settings-form">
                 <Checkbox v-model="settings.multipleChoices">
-                    <template v-slot:text>
-                        Allow multiple choices
-                    </template>
+                    Allow multiple choices
                 </Checkbox>
             </div>
         </div>
@@ -134,7 +132,7 @@ export default {
                     const { id } = data
 
                     this.$router.push({
-                        name: 'Results',
+                        name: 'Vote',
                         params: { id }
                     })
                 })

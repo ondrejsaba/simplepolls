@@ -47,6 +47,7 @@ export default {
     &.light {
         border: 1px solid light(200);
         background-color: light(100);
+        color: dark(100);
 
         &:hover {
             border: 1px solid light(300);

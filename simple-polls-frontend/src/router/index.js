@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CreatePoll from '../views/CreatePoll.vue'
-import Results from '../views/Results.vue'
+import CreatePoll from '@/views/CreatePoll.vue'
+import Vote from '@/views/Vote.vue'
+import Results from '@/views/Results.vue'
 
 const routes = [
   {
     path: '/',
     name: 'CreatePoll',
     component: CreatePoll
+  },
+  {
+    path: '/vote/:id',
+    name: 'Vote',
+    component: Vote
   },
   {
     path: '/results/:id',

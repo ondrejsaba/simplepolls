@@ -9,16 +9,16 @@
         <div
             class="box"
             :class="{
-                active: checked
+                active: checked || checkedProp
             }"
         >
-            <span class="material-icons" v-if="checked">
+            <span class="material-icons" v-if="checked || checkedProp">
                 check
             </span>
         </div>
 
         <span class="text">
-            <slot name="text"></slot>
+            <slot></slot>
         </span>
     </div>
 </template>
@@ -28,7 +28,11 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        modelValue: Boolean
+        modelValue: Boolean,
+        checkedProp: {
+            type: Boolean,
+            default: null
+        }
     },
     data() {
         return {
@@ -37,8 +41,10 @@ export default {
     },
     methods: {
         switchCheck() {
-            this.checked = !this.checked
-            this.$emit('update:modelValue', this.checked)
+            if (this.checkedProp == null) {
+                this.checked = !this.checked
+                this.$emit('update:modelValue', this.checked)  
+            }
         }
     },
     computed: {

@@ -7,15 +7,19 @@
     >
         <ul>
             <li>
-                <div id="logo" class="ml-10">
-                    <div class="logo-yellow-bar"></div>
-                    <div class="logo-blue-bar"></div>
-                    <div class="logo-red-bar"></div>
-                </div>
+                <router-link :to="{ name: 'CreatePoll' }">
+                    <div id="logo" class="ml-10">
+                        <div class="logo-yellow-bar"></div>
+                        <div class="logo-blue-bar"></div>
+                        <div class="logo-red-bar"></div>
+                    </div>
+                </router-link>
             </li>
 
             <li id="title">
-                Simple Polls
+                <router-link :to="{ name: 'CreatePoll' }">
+                    Simple Polls
+                </router-link>
             </li>
 
             <li class="right">
@@ -77,8 +81,11 @@ header {
 
     &.dark {
         background-color: dark(100);
-        color: light(100);
         border-bottom: 1px solid dark(200);
+
+        #title a {
+            color: light(100);
+        }
     }
 }
 
@@ -118,5 +125,10 @@ header {
 #title {
     font-weight: 700;
     font-size: 38px;
+    
+    a {
+        text-decoration: none;
+        color: dark(400);
+    }
 }
 </style>

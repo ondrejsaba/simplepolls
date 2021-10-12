@@ -45,7 +45,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./sass/main.scss";
 @import "./sass/classes";
 @import "./sass/variables";
 
