@@ -1,19 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const resultsModel = require('../models/resultsModel')
+const resultsController = require('../controllers/resultsController')
 
-router.get('/all', async (req, res) => {
-    res.json({
-        results: await resultsModel.getAllResults
-    })
-})
-
-router.get('/:id', async (req, res) => {
-    const { id } = req.params
-
-    res.json({
-        results: await resultsModel.getResults({id: id})
-    })
-})
+router.get('/all', resultsController.getAllResults)
+router.get('/:id', resultsController.getResults)
 
 module.exports = router
