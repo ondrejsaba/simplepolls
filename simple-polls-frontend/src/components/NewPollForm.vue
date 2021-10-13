@@ -116,6 +116,11 @@ export default {
         },
         createPoll() {
             if (this.formIsValid) {
+                let pollVotes = {}
+                this.options.forEach(option => {
+                    pollVotes[option] = 0
+                })
+
                 fetch('http://localhost:3000/manage/create', {
                     method: 'POST',
                     headers: {
@@ -124,6 +129,7 @@ export default {
                     body: JSON.stringify({
                         question: this.question,
                         options: this.options.filter(option => option.length > 0),
+                        votes: pollVotes,
                         settings: this.settings
                     })
                 }).then(response => {

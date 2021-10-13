@@ -1,12 +1,12 @@
 <template>
     <div
-        id="results"
+        id="vote"
         class="section-size center"
         :class="{
             dark: darkTheme
         }"
     >
-        <h2 id="results-title">
+        <h2 id="vote-title">
             {{ pollData.question }}
         </h2>
 
@@ -29,6 +29,7 @@
         <Button
             :ignore-color-mode="true"
             class="primary ml-20 mt-20"
+            @click="submitVote"
         >
             <template v-slot:text>
                 Submit
@@ -57,7 +58,7 @@
 <script>
 import Checkbox from '@/components/Checkbox.vue'
 import Button from '@/components/Button.vue'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
@@ -71,6 +72,10 @@ export default {
         }
     },
     methods: {
+        ...mapMutations('modal', [
+            'setModalOptions',
+            'setShowModal'
+        ]),
         selectOption(option) {
             /* in case we want the user to check only one option - check one, uncheck others */
             if (!this.canCheckOption) {
@@ -82,6 +87,40 @@ export default {
             }
 
             this.selectedBoxes[option] = !this.selectedBoxes[option]
+        },
+        submitVote() {
+            const selectedOption = Object.keys(this.selectedBoxes).filter(option => {
+                return this.selectedBoxes[option] == true
+            }).join('')
+
+            const selectedOptionIndex = Object.keys(this.selectedBoxes).indexOf(selectedOption)
+
+            if (selectedOptionIndex >= 0) {
+                fetch('http://localhost:3000/vote/' + this.pollData.id + '/' + selectedOptionIndex, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Length': 0
+                    }
+                }).then(response => response.json()).then(data => {
+                    const { success } = data
+
+                    if (success) {
+                        this.$router.push({
+                            name: 'Results',
+                            params: { id: this.$route.params.id }
+                        })
+                    } else {
+                        this.setModalOptions({
+                            component: 'MessageModal',
+                            title: 'Error',
+                            message: 'You can only vote once from one IP address.',
+                            width: '400px'
+                        })
+
+                        this.setShowModal()
+                    }
+                })
+            }
         }
     },
     computed: {
@@ -128,10 +167,10 @@ export default {
 <style lang="scss">
 @import "../sass/variables";
 
-#results {
-    h2#results-title {
+#vote {
+    h2#vote-title {
         margin: 0;
-        padding: 20px 0 0 20px;
+        padding: 20px 20px 0 20px;
         font-size: 28px;
     }
 
