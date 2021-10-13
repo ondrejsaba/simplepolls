@@ -70,7 +70,6 @@ header {
     ul {
         list-style-type: none;
         padding: 0;
-        margin-top: 25px;
 
         li {
             float: left;

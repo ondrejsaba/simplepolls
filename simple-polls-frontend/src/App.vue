@@ -5,8 +5,20 @@
       dark: darkTheme
     }"
   >
-    <Header />
-    <router-view />
+    <div
+      ref="contentBox"
+      :class="{
+        'dark': darkTheme,
+        'center-container': centerContent,
+        'pt-20': !centerContent,
+        'pb-20': !centerContent
+      }"
+    >
+      <Header />
+      <router-view
+        @updateContentPosition="updateContentPosition"
+      />
+    </div>
 
     <div
       id="dim-box"
@@ -28,10 +40,21 @@ export default {
     Header,
     Modal
   },
+  data() {
+    return {
+      centerContent: true
+    }
+  },
   methods: {
     ...mapMutations('modal', [
       'setShowModal'
-    ])
+    ]),
+    updateContentPosition() {
+      const viewHeight = window.innerHeight
+      const contentHeight = this.$refs.contentBox.offsetHeight
+
+      this.centerContent = viewHeight > contentHeight
+    }
   },
   computed: {
     ...mapState('theme', [
@@ -40,6 +63,13 @@ export default {
     ...mapState('modal', [
       'showModal'
     ])
+  },
+  mounted() {
+    this.updateContentPosition()
+    window.addEventListener('resize', this.updateContentPosition)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.updateContentPosition)
   }
 }
 </script>
@@ -74,5 +104,20 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: rgba(dark(400), 0.5);
+}
+
+.center-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid light(200);
+  box-shadow: 2px 2px 32px rgba(light(300), 0.25);
+  padding: 20px;
+
+  &.dark {
+    border: 1px solid dark(300);
+    box-shadow: 2px 2px 32px rgba(dark(400), 0.1);
+  }
 }
 </style>

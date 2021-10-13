@@ -1,6 +1,8 @@
 <template>
   <div id="create-poll">
-    <NewPollForm />
+    <NewPollForm
+      @updateContentPosition="$emit('updateContentPosition')"
+    />
   </div>
 </template>
 

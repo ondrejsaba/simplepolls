@@ -110,9 +110,11 @@ export default {
         ]),
         addOption() {
             this.options.push('')
+            this.$emit('updateContentPosition')
         },
         removeOption(deleteIndex) {
             this.options = this.options.filter((option, index) => index != deleteIndex)
+            this.$emit('updateContentPosition')
         },
         createPoll() {
             if (this.formIsValid) {
@@ -283,6 +285,6 @@ export default {
 }
 
 #new-poll-btns {
-    padding: 20px 0 20px 0;
+    padding-top: 20px;
 }
 </style>
