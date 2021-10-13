@@ -2,7 +2,7 @@ const db = require('../db')
 
 const resultsModel = {
     getAllResults: new Promise((resolve, reject) => {
-        db.all('SELECT * FROM polls', [], (err, rows) => {
+        db.all('SELECT id, question, options, votes, settings FROM polls', [], (err, rows) => {
             if (err) {
                 reject(err)
             } else {
@@ -12,7 +12,7 @@ const resultsModel = {
     }),
     getResults: async ({id}) => {
         return new Promise((resolve, reject) => {
-            db.get('SELECT * FROM polls WHERE id = ?', [id], (err, row) => {
+            db.get('SELECT id, question, options, votes, settings FROM polls WHERE id = ?', [id], (err, row) => {
                 if (err) {
                     reject(err)
                 } else {

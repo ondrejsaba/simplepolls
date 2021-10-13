@@ -5,7 +5,6 @@ const manageRoutes = require('./routes/manageRoutes')
 const voteRoutes = require('./routes/voteRoutes')
 const resultsRoutes = require('./routes/resultsRoutes')
 
-const sqlite3 = require('sqlite3')
 const fs = require('fs')
 const db = require('./db')
 

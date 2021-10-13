@@ -8,8 +8,15 @@ const voteModel = {
             })
         })
     },
-    submitVote: ({ id, option }) => {
-        db.run('UPDATE polls SET votes = ? WHERE id = ?', [option, id], err => {
+    voteGetIps: async ({ id }) => {
+        return new Promise((resolve, reject) => {
+            db.get('SELECT ips FROM polls WHERE ID = ?', [id], (err, row) => {
+                err ? reject(err) : resolve(row)
+            })
+        })
+    },
+    submitVote: ({ id, ips, votes }) => {
+        db.run('UPDATE polls SET votes = ?, ips = ? WHERE id = ?', [votes, ips, id], err => {
             if (err) {
                 console.log(err)
             }
