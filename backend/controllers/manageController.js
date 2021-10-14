@@ -12,21 +12,35 @@ const generatePollId = () => {
     return pollId
 }
 
+const pollWithIdExists = ({id}) => {
+    return new Promise((resolve, reject) => {
+        manageModel.pollWithIdExists({id})
+            .then(exists => resolve(exists))
+            .catch(err => reject(err))
+    })
+}
+
 const manageController = {
-    createPoll: (req, res) => {
+    createPoll: async (req, res) => {
         const {question, options, votes, settings} = req.body
         const pollId = generatePollId()
 
-        manageModel.createPoll({
-            id: pollId,
-            question: question,
-            options: JSON.stringify(options),
-            votes: JSON.stringify(votes),
-            settings: JSON.stringify(settings)
-        })
+        pollWithIdExists({id: pollId}).then(isIdInvalid => {
+            if (!isIdInvalid) {
+                manageModel.createPoll({
+                    id: pollId,
+                    question: question,
+                    options: JSON.stringify(options),
+                    votes: JSON.stringify(votes),
+                    settings: JSON.stringify(settings)
+                })
 
-        res.json({
-            id: pollId
+                res.json({
+                    id: pollId
+                })
+            } else {
+                manageController.createPoll(req, res)
+            }
         })
     }
 }
