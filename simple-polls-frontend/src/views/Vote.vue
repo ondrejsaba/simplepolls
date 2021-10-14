@@ -28,7 +28,7 @@
 
         <Button
             :ignore-color-mode="true"
-            class="primary ml-20 mt-20"
+            class="primary mt-20"
             @click="submitVote"
         >
             <template v-slot:text>
@@ -46,7 +46,7 @@
                 params: { id: $route.params.id }
             }"
         >
-            <Button class="mr-20 mt-20 right">
+            <Button class="mt-20 right">
                 <template v-slot:text>
                     Show results
                 </template>

@@ -11,6 +11,7 @@
                 type="text"
                 name="title"
                 autocomplete="off"
+                spellcheck="false"
                 placeholder="Type your question here"
                 v-model="question"
             >
@@ -25,6 +26,7 @@
                     <input
                         type="text"
                         autocomplete="off"
+                        spellcheck="false"
                         v-model="options[index]"
                         :placeholder="'Option ' + (index + 1)"
                         :name="'option' + (index + 1)"
@@ -250,6 +252,7 @@ export default {
             border: 1px solid dark(300);
             background-color: dark(200);
             caret-color: light(200);
+            color: light(200);
 
             &:focus {
                 border: 1px solid dark(400);

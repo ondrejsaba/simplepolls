@@ -1,0 +1,35 @@
+// fade
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to, .fade-leave-from {
+    opacity: 1;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.1s ease;
+}
+
+.fade-leave-active {
+    transition-delay: 0.1s;
+}
+
+// modal
+.modal-enter-from, .modal-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.05) !important;
+}
+
+.modal-enter-to, .modal-leave-from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+
+.modal-enter-active, .modal-leave-active {
+    transition: all 0.1s ease;
+}
+
+.modal-enter-active {
+    transition-delay: 0.1s;
+}

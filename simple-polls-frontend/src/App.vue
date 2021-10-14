@@ -20,13 +20,17 @@
       />
     </div>
 
-    <div
-      id="dim-box"
-      v-if="showModal"
-      @click.self="setShowModal"
-    >
-      <Modal />
-    </div>
+    <transition name="fade">
+      <div
+        id="dim-box"
+        v-if="showModal"
+        @click.self="setShowModal"
+      ></div>
+    </transition>
+
+    <transition name="modal">
+      <Modal v-if="showModal" />
+    </transition>
   </div>
 </template>
 
@@ -77,6 +81,7 @@ export default {
 <style lang="scss">
 @import "./sass/classes";
 @import "./sass/variables";
+@import "./sass/transitions";
 
 body {
   margin: 0;

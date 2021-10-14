@@ -1,5 +1,10 @@
 <template>
-    <div id="bar-chart">
+    <div
+        id="bar-chart"
+        :class="{
+            dark: darkTheme
+        }"
+    >
         <div
             class="item-bar"
             v-for="(votes, name) in data"
@@ -11,7 +16,7 @@
                 </span>
 
                 <span class="votes">
-                    ({{ votes }} votes)
+                    {{ votePercentage(votes) }} ({{ votes }} votes)
                 </span>
             </p>
 
@@ -19,7 +24,8 @@
                 <div
                     class="bar-fill"
                     :style="{
-                        width: (votes / totalVotes) * 100 + '%'
+                        width: (votes / totalVotes) * 100 + '%',
+                        backgroundColor: barColors[name]
                     }"
                 ></div>
             </div>
@@ -28,14 +34,27 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: {
         data: {
             type: Object,
             default: {}
+        },
+        barColors: {
+            type: Object,
+            default: {}
+        }
+    },
+    methods: {
+        votePercentage(votes) {
+            return ((votes / this.totalVotes) * 100).toFixed(2) + '%'
         }
     },
     computed: {
+        ...mapState('theme', ['darkTheme']),
+
         totalVotes() {
             return Object.values(this.data).reduce((total, current) => total + current, 0)
         }
@@ -83,7 +102,15 @@ export default {
 
             .bar-fill {
                 height: 100%;
-                background-color: blue(100);
+            }
+        }
+    }
+
+    &.dark {
+        .item-bar {
+            .bar {
+                border: 1px solid dark(300);
+                background-color: dark(200);
             }
         }
     }
