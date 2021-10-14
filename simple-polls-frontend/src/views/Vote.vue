@@ -118,18 +118,15 @@ export default {
         },
 
         submitVote() {
-            const selectedOption = Object.keys(this.selectedBoxes).filter(option => {
-                return this.selectedBoxes[option] == true
-            }).join('')
+            const selectedOptions = Object.keys(this.selectedBoxes).filter(option => this.selectedBoxes[option] == true)
 
-            const selectedOptionIndex = Object.keys(this.selectedBoxes).indexOf(selectedOption)
-
-            if (selectedOptionIndex >= 0) {
-                fetch('http://localhost:3000/vote/' + this.pollData.id + '/' + selectedOptionIndex, {
+            if (selectedOptions.length > 0) {
+                fetch('http://localhost:3000/vote/' + this.pollData.id, {
                     method: 'PUT',
                     headers: {
-                        'Content-Length': 0
-                    }
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({selectedOptions})
                 }).then(response => response.json()).then(data => {
                     const { success } = data
 
@@ -149,6 +146,8 @@ export default {
                         this.setShowModal()
                     }
                 })
+            } else {
+
             }
         }
     },

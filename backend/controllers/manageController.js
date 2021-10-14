@@ -21,6 +21,13 @@ const pollWithIdExists = ({id}) => {
 }
 
 const manageController = {
+    pollExists: async (req, res) => {
+        const {id} = req.params
+
+        pollWithIdExists({id}).then(exists => {
+            res.json({exists})
+        })
+    },
     createPoll: async (req, res) => {
         const {question, options, votes, settings} = req.body
         const pollId = generatePollId()

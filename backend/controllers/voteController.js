@@ -9,18 +9,22 @@ const voteController = {
         })
     },
     submitVote: async (req, res) => {
-        const { id, option } = req.params
+        const { id } = req.params
+        const { selectedOptions } = req.body
         const ipAddress = req.socket.remoteAddress
         const ipsThatVoted = await voteModel.voteGetIps({id})
 
+        // get all current votes
+        const allVotes = await voteModel.getVotes({id})
+        let votes = JSON.parse(allVotes.votes)
+
+        // modify the votes
+        selectedOptions.forEach(async (option) => {
+            votes[option] += 1
+        })
+
         // allow only one vote per ip
         if (!ipsThatVoted.ips.includes(ipAddress)) {
-            // get all votes and the voted item by its index, then add the vote and submit
-            const optionVotes = await voteModel.getVotes({id})
-            let votes = JSON.parse(optionVotes.votes)
-            const voteFor = Array.from(Object.keys(votes))[option]
-
-            votes[voteFor] += 1
             voteModel.submitVote({
                 id,
                 ips: JSON.stringify([...JSON.parse(ipsThatVoted.ips), ipAddress]),
