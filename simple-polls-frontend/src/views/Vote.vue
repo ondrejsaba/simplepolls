@@ -1,6 +1,7 @@
 <template>
     <div
         id="vote"
+        v-if="pollExists"
         class="section-size center"
         :class="{
             dark: darkTheme
@@ -53,20 +54,28 @@
             </Button>
         </router-link>
     </div>
+
+    <div v-else id="not-found">
+        <NotFound />
+    </div>
 </template>
 
 <script>
 import Checkbox from '@/components/Checkbox.vue'
 import Button from '@/components/Button.vue'
+import NotFound from '@/components/NotFound.vue'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
         Checkbox,
-        Button
+        Button,
+        NotFound
     },
     data() {
         return {
+            pollExists: false,
+
             pollData: {},
             selectedBoxes: {}
         }
@@ -76,6 +85,25 @@ export default {
             'setModalOptions',
             'setShowModal'
         ]),
+
+        getData() {
+            fetch('http://localhost:3000/results/' + this.$route.params.id)
+                .then(response => response.json())
+                .then(data => {
+                    const {id, question, options, settings} = data.results
+
+                    this.pollData = {
+                        id, question,
+                        options: JSON.parse(options),
+                        settings: JSON.parse(settings)
+                    }
+
+                    this.pollData.options.forEach(option => {
+                        this.selectedBoxes[option] = false
+                    })
+                })
+        },
+
         selectOption(option) {
             /* in case we want the user to check only one option - check one, uncheck others */
             if (!this.canCheckOption) {
@@ -88,6 +116,7 @@ export default {
 
             this.selectedBoxes[option] = !this.selectedBoxes[option]
         },
+
         submitVote() {
             const selectedOption = Object.keys(this.selectedBoxes).filter(option => {
                 return this.selectedBoxes[option] == true
@@ -144,21 +173,22 @@ export default {
             }
         }
     },
+    watch: {
+        pollExists: {
+            handler: function() {
+                if (this.pollExists) {
+                    this.getData()
+                }
+            }
+        }
+    },
     mounted() {
-        fetch('http://localhost:3000/results/' + this.$route.params.id)
+        fetch('http://localhost:3000/manage/exists/' + this.$route.params.id)
             .then(response => response.json())
             .then(data => {
-                const {id, question, options, settings} = data.results
+                const {exists} = data
 
-                this.pollData = {
-                    id, question,
-                    options: JSON.parse(options),
-                    settings: JSON.parse(settings)
-                }
-
-                this.pollData.options.forEach(option => {
-                    this.selectedBoxes[option] = false
-                })
+                this.pollExists = exists
             })
     },
 }

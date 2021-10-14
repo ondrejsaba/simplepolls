@@ -1,6 +1,7 @@
 <template>
     <div
         id="results"
+        v-if="pollExists"
         class="section-size center"
         :class="{
             dark: darkTheme
@@ -53,22 +54,30 @@
             </router-link>
         </div>
     </div>
+
+    <div v-else id="not-found">
+        <NotFound />
+    </div>
 </template>
 
 <script>
 import Bar from '@/components/charts/Bar.vue'
 import Pie from '@/components/charts/Pie.vue'
 import Button from '@/components/Button.vue'
+import NotFound from '@/components/NotFound.vue'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
         Bar,
         Pie,
-        Button
+        Button,
+        NotFound
     },
     data() {
         return {
+            pollExists: false,
+
             pollData: {},
             totalVotes: 0,
 
@@ -79,6 +88,20 @@ export default {
     },
     methods: {
         ...mapMutations('modal', ['setShowModal', 'setModalOptions']),
+
+        getResults() {
+            fetch('http://localhost:3000/results/' + this.$route.params.id)
+                .then(response => response.json())
+                .then(data => {
+                    const {question, votes} = data.results
+
+                    this.pollData = {
+                        question,
+                        votes: JSON.parse(votes)
+                    }
+                })
+        },
+
         copyLink() {
             // add code for actually copying the code into user's clipboard
 
@@ -97,6 +120,13 @@ export default {
         ...mapState('theme', ['darkTheme'])
     },
     watch: {
+        pollExists: {
+            handler: function() {
+                if (this.pollExists) {
+                    this.getResults()
+                }
+            }
+        },
         pollData: {
             deep: true,
             handler: function() {
@@ -117,15 +147,12 @@ export default {
         }
     },
     mounted() {
-        fetch('http://localhost:3000/results/' + this.$route.params.id)
+        fetch('http://localhost:3000/manage/exists/' + this.$route.params.id)
             .then(response => response.json())
             .then(data => {
-                const {question, votes} = data.results
+                const {exists} = data
 
-                this.pollData = {
-                    question,
-                    votes: JSON.parse(votes)
-                }
+                this.pollExists = exists
             })
     }
 }
@@ -135,6 +162,9 @@ export default {
 @import "../sass/variables";
 
 #results {
+    color: dark(100);
+    user-select: none;
+
     h2#results-title {
         width: 100%;
         margin: 0;
