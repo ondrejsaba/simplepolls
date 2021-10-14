@@ -50,9 +50,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('modal', [
-      'setShowModal'
-    ]),
+    ...mapMutations('theme', ['syncTheme']),
+    ...mapMutations('modal', ['setShowModal']),
+
     updateContentPosition() {
       setTimeout(() => {
         const viewHeight = window.innerHeight
@@ -63,14 +63,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('theme', [
-      'darkTheme'
-    ]),
-    ...mapState('modal', [
-      'showModal'
-    ])
+    ...mapState('theme', ['darkTheme']),
+    ...mapState('modal', ['showModal'])
   },
   mounted() {
+    this.syncTheme()
     this.updateContentPosition()
     window.addEventListener('resize', this.updateContentPosition)
   },
