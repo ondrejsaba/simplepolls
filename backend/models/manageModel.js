@@ -13,9 +13,9 @@ const manageModel = {
         })
     },
     createPoll: ({id, question, options, votes, settings}) => {
-        db.run('INSERT INTO polls(id, question, options, votes, settings) VALUES (?, ?, ?, ?, ?)', [
-            id, question, options, votes, settings
-        ], err => {
+        const query = 'INSERT INTO polls(id, question, options, votes, settings) VALUES (?, ?, ?, ?, ?)'
+
+        db.run(query, [id, question, options, votes, settings], err => {
             if (err) {
                 console.log(err)
             }
