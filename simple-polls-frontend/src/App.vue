@@ -54,10 +54,12 @@ export default {
       'setShowModal'
     ]),
     updateContentPosition() {
-      const viewHeight = window.innerHeight
-      const contentHeight = this.$refs.contentBox.offsetHeight
+      setTimeout(() => {
+        const viewHeight = window.innerHeight
+        const contentHeight = this.$refs.contentBox.offsetHeight
 
-      this.centerContent = viewHeight > contentHeight
+        this.centerContent = viewHeight > contentHeight
+      }, 0)
     }
   },
   computed: {

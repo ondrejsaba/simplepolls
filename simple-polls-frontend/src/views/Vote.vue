@@ -97,7 +97,7 @@ export default {
 
             if (selectedOptionIndex >= 0) {
                 fetch('http://localhost:3000/vote/' + this.pollData.id + '/' + selectedOptionIndex, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Length': 0
                     }

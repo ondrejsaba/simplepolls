@@ -10,6 +10,10 @@
             {{ pollData.question }}
         </h2>
 
+        <h3 id="results-votes">
+            {{ totalVotes }} votes
+        </h3>
+
         <div id="results-charts">
             <Bar
                 :data="pollData.votes"
@@ -66,9 +70,10 @@ export default {
     data() {
         return {
             pollData: {},
+            totalVotes: 0,
 
             // colors
-            colorsList: ['#006699', '#6E4673', '#649E0B', '#F6921E', '#D14343', '#00AFAF'],
+            colorsList: ['#FFEB3B', '#03A9F4', '#E53935', '#8BC34A', '#FB8C00', '#7E57C2'],
             barColors: {}
         }
     },
@@ -102,6 +107,12 @@ export default {
 
                     this.barColors[option] = this.colorsList[colorIndex]
                 })
+
+                // update position according to the content
+                this.$emit('updateContentPosition')
+
+                // get total votes from the poll data
+                this.totalVotes = Object.values(this.pollData.votes).reduce((total, current) => total + current)
             }
         }
     },
@@ -127,10 +138,18 @@ export default {
     h2#results-title {
         width: 100%;
         margin: 0;
-        padding: 20px 0 20px 0;
+        padding: 20px 20px 5px 0;
         font-size: 28px;
+    }
+
+    h3#results-votes {
+        width: 100%;
+        margin: 0;
+        padding: 0 20px 20px 0;
         box-sizing: border-box;
         border-bottom: 1px solid light(200);
+        font-weight: 500;
+        font-size: 18px;
     }
 
     #results-charts {
@@ -140,7 +159,7 @@ export default {
     &.dark {
         color: light(100);
 
-        h2#results-title {
+        h3#results-votes {
             border-bottom: 1px solid dark(200);
         }
     }
