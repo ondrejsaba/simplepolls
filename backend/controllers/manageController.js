@@ -1,15 +1,28 @@
+const bcrypt = require('bcrypt')
 const manageModel = require('../models/manageModel')
 
-const generatePollId = () => {
-    const alphabet = [...Array(26).keys()].map(key => String.fromCharCode(key + 97))
-    const numbers = [...Array(10).keys()]
-    const possibleCharacters = [...alphabet, ...numbers]
+const alphabet = [...Array(26).keys()].map(key => String.fromCharCode(key + 97))
+const numbers = [...Array(10).keys()]
+const possibleCharacters = [...alphabet, ...numbers]
 
+const arrayRandomItem = (array) => {
+    return array[Math.floor(Math.random() * array.length)]
+} 
+
+const generatePollId = () => {
     const pollId = [...Array(6)].map(key => {
-        return possibleCharacters[Math.floor(Math.random() * possibleCharacters.length)]
+        return arrayRandomItem(possibleCharacters)
     }).join("")
 
     return pollId
+}
+
+const generatePollPwd = () => {
+    const pollPwd = [...Array(16)].map(key => {
+        return arrayRandomItem(possibleCharacters)
+    }).join("")
+
+    return pollPwd
 }
 
 const pollWithIdExists = ({id}) => {
@@ -42,12 +55,45 @@ const manageController = {
                     settings: JSON.stringify(settings)
                 })
 
+                const pollPwd = generatePollPwd()
+
+                // generate poll's admin password
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(pollPwd, salt, (err, hash) => {
+                        manageModel.setPwd({
+                            id: pollId,
+                            pwd: hash
+                        })
+                    })
+                })
+
                 res.json({
-                    id: pollId
+                    id: pollId,
+                    pwd: pollPwd
                 })
             } else {
                 manageController.createPoll(req, res)
             }
+        })
+    },
+    deletePoll: async (req, res) => {
+        const {id} = req.params
+        const {inputPwd} = req.body
+
+        const pollPwdHash = await manageModel.passwordHash({id})
+
+        bcrypt.compare(inputPwd, pollPwdHash, (err, result) => {
+            if (result == true) {
+                manageModel.deletePoll({
+                    id,
+                    pwd: inputPwd,
+                    hash: pollPwdHash
+                })
+            }
+
+            res.json({
+                success: result
+            })
         })
     }
 }

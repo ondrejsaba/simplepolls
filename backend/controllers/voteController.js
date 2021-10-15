@@ -20,7 +20,9 @@ const voteController = {
 
         // modify the votes
         selectedOptions.forEach(async (option) => {
-            votes[option] += 1
+            if (Object.keys(votes).includes(option)) {
+                votes[option] += 1
+            }
         })
 
         // allow only one vote per ip

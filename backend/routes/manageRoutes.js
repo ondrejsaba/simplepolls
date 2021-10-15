@@ -4,5 +4,6 @@ const manageController = require('../controllers/manageController')
 
 router.get('/exists/:id', manageController.pollExists)
 router.post('/create', manageController.createPoll)
+router.delete('/delete/:id', manageController.deletePoll)
 
 module.exports = router
