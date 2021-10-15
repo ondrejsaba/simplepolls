@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 import Header from '@/components/Header.vue'
 import Modal from '@/components/Modal.vue'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -78,6 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./sass/main";
 @import "./sass/classes";
 @import "./sass/variables";
 @import "./sass/transitions";
@@ -94,10 +95,12 @@ body {
 
 #main-view {
   background-color: light(100);
+  color: dark(100);
   min-height: 100vh;
 
   &.dark {
     background-color: dark(100);
+    color: light(100);
   }
 }
 

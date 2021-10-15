@@ -6,6 +6,7 @@ const moduleModal = {
             component: '',
             title: '',
             message: '',
+            data: {},
             width: '400px',
             height: 'auto'
         }
@@ -14,13 +15,14 @@ const moduleModal = {
         setShowModal(state) {
             state.showModal = !state.showModal
         },
-        setModalOptions(state, { component, title = '', message = '', width = '400px', height = 'auto' }) {
+        setModalOptions(state, { component, title = '', message = '', data = {}, width = '400px', height = 'auto' }) {
             state.modalOptions = {
-                component: component,
-                title: title,
-                message: message,
-                width: width,
-                height: height
+                component,
+                title,
+                message,
+                data,
+                width,
+                height
             }
         }
     }

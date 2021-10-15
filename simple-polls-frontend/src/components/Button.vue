@@ -8,7 +8,13 @@
     >
         <slot name="text"></slot>
 
-        <span class="material-icons">
+        <span
+            v-if="$slots.icon"
+            class="material-icons"
+            :class="{
+                'pl-5': $slots.text
+            }"
+        >
             <slot name="icon"></slot>
         </span>
     </div>
@@ -82,6 +88,19 @@ export default {
 
         &:active {
             background-color: blue(500);
+        }
+    }
+
+    &.red {
+        background-color: red(200);
+        color: light(100);
+
+        &:hover {
+            background-color: red(300);
+        }
+
+        &:active {
+            background-color: red(400);
         }
     }
 

@@ -2,7 +2,6 @@
     <div
         id="results"
         v-if="pollExists"
-        class="section-size center"
         :class="{
             dark: darkTheme
         }"
@@ -15,7 +14,7 @@
             {{ totalVotes }} votes
         </h3>
 
-        <div id="results-charts">
+        <div id="results-charts" v-if="totalVotes > 0">
             <Bar
                 :data="pollData.votes"
                 :barColors="barColors"
@@ -27,8 +26,31 @@
             />
         </div>
 
+        <div id="no-votes" v-else>
+            <p>There are no votes yet.</p>
+        </div>
+
         <div id="results-btns">
-            <Button @click="copyLink">
+            <router-link
+                :to="{
+                    name: totalVotes > 0 ? 'CreatePoll' : 'Vote',
+                    params: {
+                        id: totalVotes > 0 ? '' : this.$route.params.id
+                    }
+                }"
+            >
+                <Button class="primary" :ignore-color-mode="true">
+                    <template v-slot:text>
+                        {{ totalVotes > 0 ? 'Create a new poll' : 'Vote' }}
+                    </template>
+
+                    <template v-slot:icon>
+                        arrow_forward
+                    </template>
+                </Button>
+            </router-link>
+
+            <Button class="right" @click="copyLink">
                 <template v-slot:text>
                     Copy link
                 </template>
@@ -37,21 +59,6 @@
                     content_copy
                 </template>
             </Button>
-
-            <router-link :to="{ name: 'CreatePoll' }">
-                <Button
-                    class="primary right"
-                    :ignore-color-mode="true"
-                >
-                    <template v-slot:text>
-                        Create a new poll
-                    </template>
-
-                    <template v-slot:icon>
-                        arrow_forward
-                    </template>
-                </Button>
-            </router-link>
         </div>
     </div>
 
@@ -101,7 +108,6 @@ export default {
                     }
                 })
         },
-
         copyLink() {
             // add code for actually copying the code into user's clipboard
 
@@ -109,7 +115,7 @@ export default {
             this.setModalOptions({
                 component: 'MessageModal',
                 title: 'Copied',
-                message: 'Link to the poll was succesfully copied to your clipboard.',
+                message: 'A link to the poll was succesfully copied to your clipboard.',
                 width: '400px'
             })
 
@@ -182,8 +188,15 @@ export default {
         font-size: 18px;
     }
 
-    #results-charts {
+    #results-charts, #no-votes {
         padding: 20px 0 50px 0;
+    }
+
+    #no-votes {
+        p {
+            margin: 0;
+            font-size: 18px;
+        }
     }
 
     &.dark {

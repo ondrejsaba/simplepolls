@@ -1,0 +1,33 @@
+@import "./variables";
+
+// inputs 
+
+input[type=text], input[type=password] {
+    box-sizing: border-box;
+    height: 50px;
+    padding: 0 10px 0 10px;
+    font-size: 20px;
+    border: 1px solid light(300);
+    border-radius: 4px;
+    font-family: 'Inter';
+
+    &:focus {
+        border: 1px solid light(500);
+        outline: 3px solid rgba(blue(100), 0.33);
+    }
+
+    &.dark {
+        border: 1px solid dark(300);
+        background-color: dark(200);
+        caret-color: light(200);
+        color: light(200);
+
+        &:focus {
+            border: 1px solid dark(400);
+        }
+
+        &::placeholder {
+            color: light(200);
+        }
+    }
+}

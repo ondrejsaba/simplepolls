@@ -23,11 +23,15 @@
 
 <script>
 import MessageModal from '@/components/modals/MessageModal.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
+import CopyModal from '@/components/modals/CopyModal.vue'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
-        MessageModal
+        MessageModal,
+        DeleteModal,
+        CopyModal
     },
     methods: {
         ...mapMutations('modal', [

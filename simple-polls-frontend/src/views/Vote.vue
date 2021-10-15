@@ -2,7 +2,6 @@
     <div
         id="vote"
         v-if="pollExists"
-        class="section-size center"
         :class="{
             dark: darkTheme
         }"
@@ -50,6 +49,10 @@
             <Button class="mt-20 right">
                 <template v-slot:text>
                     Show results
+                </template>
+
+                <template v-slot:icon>
+                    bar_chart
                 </template>
             </Button>
         </router-link>
@@ -147,7 +150,16 @@ export default {
                     }
                 })
             } else {
+                this.setModalOptions({
+                    component: 'MessageModal',
+                    title: 'Error',
+                    message: this.pollData.settings.multipleChoices ?
+                        'Please pick at least one option.' :
+                        'Please pick an option.',
+                    width: '400px'
+                })
 
+                this.setShowModal()
             }
         }
     },

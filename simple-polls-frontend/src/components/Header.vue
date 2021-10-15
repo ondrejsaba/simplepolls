@@ -29,6 +29,14 @@
                     </template>
                 </Button>
             </li>
+
+            <li class="right" v-if="$route.name == 'Results'">
+                <Button class="big circle mr-10" @click="deletePoll">
+                    <template v-slot:icon>
+                        delete
+                    </template>
+                </Button>
+            </li>
         </ul>
     </header>
 </template>
@@ -42,14 +50,22 @@ export default {
         Button
     },
     methods: {
-        ...mapMutations('theme', [
-            'setDarkTheme'
-        ])
+        ...mapMutations('theme', ['setDarkTheme']),
+        ...mapMutations('modal', ['setShowModal', 'setModalOptions']),
+
+        deletePoll() {
+            this.setModalOptions({
+                component: 'DeleteModal',
+                title: 'Authentication required',
+                width: '400px'
+            })
+
+            this.setShowModal()
+        }
     },
     computed: {
-        ...mapState('theme', [
-            'darkTheme'
-        ]),
+        ...mapState('theme', ['darkTheme']),
+
         themeIcon() {
             return this.darkTheme ? '🌙' : '☀️'
         }

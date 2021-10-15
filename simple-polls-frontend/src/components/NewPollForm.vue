@@ -14,6 +14,9 @@
                 spellcheck="false"
                 placeholder="Type your question here"
                 v-model="question"
+                :class="{
+                    dark: darkTheme
+                }"
             >
 
             <label>Options</label>
@@ -30,6 +33,9 @@
                         v-model="options[index]"
                         :placeholder="'Option ' + (index + 1)"
                         :name="'option' + (index + 1)"
+                        :class="{
+                            dark: darkTheme
+                        }"
                     >
 
                     <span
@@ -139,12 +145,24 @@ export default {
                 }).then(response => {
                     return response.json()
                 }).then(data => {
-                    const { id } = data
+                    const { id, pwd } = data
 
                     this.$router.push({
-                        name: 'Vote',
+                        name: 'Results',
                         params: { id }
                     })
+
+                    this.setModalOptions({
+                        component: 'CopyModal',
+                        title: 'Poll admin password',
+                        message: "Save your poll's password in case you wanted to delete it in the future:",
+                        data: {
+                            copyText: pwd
+                        },
+                        width: '400px'
+                    })
+
+                    this.setShowModal()
                 })
             } else {
                 this.setModalOptions({
@@ -205,21 +223,6 @@ export default {
         user-select: none;
     }
 
-    input[type=text] {
-        box-sizing: border-box;
-        height: 50px;
-        padding: 0 10px 0 10px;
-        font-size: 20px;
-        border: 1px solid light(300);
-        border-radius: 4px;
-        font-family: 'Inter';
-
-        &:focus {
-            border: 1px solid light(500);
-            outline: 3px solid rgba(blue(100), 0.33);
-        }
-    }
-
     .option {
         position: relative;
 
@@ -247,21 +250,6 @@ export default {
 
     &.dark {
         border-bottom: 1px solid dark(200);
-
-        input[type=text] {
-            border: 1px solid dark(300);
-            background-color: dark(200);
-            caret-color: light(200);
-            color: light(200);
-
-            &:focus {
-                border: 1px solid dark(400);
-            }
-
-            &::placeholder {
-                color: light(200);
-            }
-        }
 
         label {
             color: light(100);
