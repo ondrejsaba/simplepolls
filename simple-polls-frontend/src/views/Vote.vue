@@ -209,6 +209,8 @@ export default {
 @import "../sass/variables";
 
 #vote {
+    user-select: none;
+
     h2#vote-title {
         margin: 0;
         padding: 20px 20px 0 20px;

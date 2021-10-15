@@ -109,13 +109,15 @@ export default {
                 })
         },
         copyLink() {
-            // add code for actually copying the code into user's clipboard
+            const url = 'localhost:8080'
 
-            // informative dialog
             this.setModalOptions({
-                component: 'MessageModal',
-                title: 'Copied',
-                message: 'A link to the poll was succesfully copied to your clipboard.',
+                component: 'CopyModal',
+                title: 'Copy link',
+                message: 'A link to your poll:',
+                data: {
+                    copyText: url + '/vote/' + this.$route.params.id
+                },
                 width: '400px'
             })
 
