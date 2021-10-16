@@ -192,6 +192,12 @@ export default {
                     this.getData()
                 }
             }
+        },
+        pollData: {
+            handler: function() {
+                this.$emit('updateContentPosition')
+            },
+            deep: true
         }
     },
     mounted() {

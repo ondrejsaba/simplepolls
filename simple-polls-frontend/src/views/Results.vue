@@ -138,7 +138,6 @@ export default {
             }
         },
         pollData: {
-            deep: true,
             handler: function() {
                 // assign colors to options
                 Object.keys(this.pollData.votes).forEach((option, index) => {
@@ -157,7 +156,15 @@ export default {
                 // create a sorted version of the data
                 const sortedData = Object.entries(this.pollData.votes).sort(([keyA,a], [keyB,b]) => b - a)
                 this.sortedPollData = Object.fromEntries(sortedData)
-            }
+
+                // sort colors
+                const sortedBarColors = Object.fromEntries(Object.entries(this.sortedPollData).map(([option], index) => {
+                    return [option, this.barColors[option]]
+                }))
+
+                this.barColors = sortedBarColors
+            },
+            deep: true
         }
     },
     mounted() {
