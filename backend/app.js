@@ -1,3 +1,5 @@
+const dotenv = require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors')
 
@@ -29,4 +31,4 @@ app.use('*', (req, res) => {
     res.status(404)
 })
 
-app.listen(3000)
+app.listen(process.env.PORT)
