@@ -158,7 +158,7 @@ export default {
                 this.sortedPollData = Object.fromEntries(sortedData)
 
                 // sort colors
-                const sortedBarColors = Object.fromEntries(Object.entries(this.sortedPollData).map(([option], index) => {
+                const sortedBarColors = Object.fromEntries(Object.keys(this.sortedPollData).map((option, index) => {
                     return [option, this.barColors[option]]
                 }))
 
