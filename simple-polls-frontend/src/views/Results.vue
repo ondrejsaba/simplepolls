@@ -15,14 +15,14 @@
             {{ totalVotes }} votes
         </h3>
 
-        <div id="results-charts" v-if="totalVotes > 0">
+        <div id="results-charts" v-if="totalVotes > 0 && sortedPollData">
             <Bar
-                :data="pollData.votes"
+                :data="sortedPollData"
                 :barColors="barColors"
             />
 
             <Pie
-                :data="pollData.votes"
+                :data="sortedPollData"
                 :barColors="barColors"
             />
         </div>
@@ -87,10 +87,11 @@ export default {
             pollExists: false,
 
             pollData: {},
+            sortedPollData: {},
             totalVotes: 0,
 
             // colors
-            colorsList: ['#FFEB3B', '#03A9F4', '#E53935', '#8BC34A', '#FB8C00', '#7E57C2'],
+            colorsList: ['#FFEB3B', '#03A9F4', '#E53935', '#8BC34A', '#FB8C00', '#7E57C2', '#E91E63', '#3F51B5'],
             barColors: {}
         }
     },
@@ -152,6 +153,10 @@ export default {
 
                 // get total votes from the poll data
                 this.totalVotes = Object.values(this.pollData.votes).reduce((total, current) => total + current)
+
+                // create a sorted version of the data
+                const sortedData = Object.entries(this.pollData.votes).sort(([keyA,a], [keyB,b]) => b - a)
+                this.sortedPollData = Object.fromEntries(sortedData)
             }
         }
     },
