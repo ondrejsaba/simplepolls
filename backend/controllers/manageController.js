@@ -9,20 +9,12 @@ const arrayRandomItem = (array) => {
     return array[Math.floor(Math.random() * array.length)]
 } 
 
-const generatePollId = () => {
-    const pollId = [...Array(6)].map(key => {
+const randomString = (length) => {
+    const string = [...Array(length)].map(key => {
         return arrayRandomItem(possibleCharacters)
     }).join("")
 
-    return pollId
-}
-
-const generatePollPwd = () => {
-    const pollPwd = [...Array(16)].map(key => {
-        return arrayRandomItem(possibleCharacters)
-    }).join("")
-
-    return pollPwd
+    return string
 }
 
 const pollWithIdExists = ({id}) => {
@@ -43,7 +35,7 @@ const manageController = {
     },
     createPoll: async (req, res) => {
         const {question, options, votes, settings} = req.body
-        const pollId = generatePollId()
+        const pollId = randomString(6)
 
         pollWithIdExists({id: pollId}).then(isIdInvalid => {
             if (!isIdInvalid) {
@@ -55,7 +47,7 @@ const manageController = {
                     settings: JSON.stringify(settings)
                 })
 
-                const pollPwd = generatePollPwd()
+                const pollPwd = randomString(12)
 
                 // generate poll's admin password
                 bcrypt.genSalt(10, (err, salt) => {
