@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3')
 
-let db = new sqlite3.Database('./db/database.db', sqlite3.OPEN_READWRITE, err => {
+const openMode = sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
+let db = new sqlite3.Database('./db/database.db', openMode, err => {
     if (err) {
         console.log(err.message)
     }
