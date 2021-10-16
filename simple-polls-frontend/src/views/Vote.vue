@@ -1,6 +1,7 @@
 <template>
     <div
         id="vote"
+        class="section-size center"
         v-if="pollExists"
         :class="{
             dark: darkTheme

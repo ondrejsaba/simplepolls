@@ -1,8 +1,18 @@
+@import "./sass/mediaqueries";
+
 // sections
 
 .section-size {
     width: 50vw;
     height: auto;
+
+    @include laptop {
+        width: 75vw;
+    }
+
+    @include mobile {
+        width: calc(100vw - 40px);
+    }
 }
 
 .center {

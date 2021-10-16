@@ -11,13 +11,13 @@
             :key="name"
         >
             <p class="item-details">
-                <span class="name">
+                <div class="name">
                     {{ name }}
-                </span>
+                </div>
 
-                <span class="votes">
+                <div class="votes">
                     {{ votePercentage(votes) }} ({{ votes }} votes)
-                </span>
+                </div>
             </p>
 
             <div class="bar">
@@ -64,31 +64,71 @@ export default {
 
 <style lang="scss">
 @import "../../sass/variables";
+@import "../../sass/mediaqueries";
 
 #bar-chart {
     display: inline-block;
     width: calc(100% - 300px);
-    height: 200px;
+    min-height: 200px;
+
+    @include mobile {
+        display: block;
+        width: 100%;
+    }
 
     .item-bar {
         width: calc(100% - 20px);
         height: 50px;
+        box-sizing: border-box;
 
         &:not(:first-of-type) {
             margin-top: 20px;
         }
 
         .item-details {
+            position: relative;
             width: 100%;
             height: 20px;
             margin: 0;
+            overflow: hidden;
 
-            span.name {
+            .name, .votes {
+                display: inline-block;
+                vertical-align: top;
+                white-space: nowrap;
+                width: 50%;
+            }
+
+            .name {
                 font-weight: 600;
             }
 
-            span.votes {
-                float: right;
+            .votes {
+                position: absolute;
+                right: 0;
+                text-align: right;
+            }
+        }
+
+        @include laptop {
+            width: 100%;
+
+            &:not(:first-of-type) {
+                margin-top: 40px;
+            }
+
+            .item-details {
+                height: 40px;
+
+                .name, .votes {
+                    display: block;
+                    width: 100%;
+                }
+
+                .votes {
+                    position: relative;
+                    text-align: left;
+                }
             }
         }
 

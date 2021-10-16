@@ -56,6 +56,7 @@ export default {
 
 <style lang="scss">
 @import "../../sass/variables";
+@import "../../sass/mediaqueries";
 
 #pie-chart {
     display: inline-block;
@@ -68,6 +69,10 @@ export default {
 
     &.dark {
         border: 1px solid dark(200);
+    }
+
+    @include mobile {
+        display: none;
     }
 }
 </style>

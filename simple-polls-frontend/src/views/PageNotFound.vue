@@ -1,5 +1,5 @@
 <template>
-    <div id="not-found">
+    <div id="not-found" class="section-size center">
         <h2>404</h2>
         <p>The page you were looking for doesn't exist.</p>
 
