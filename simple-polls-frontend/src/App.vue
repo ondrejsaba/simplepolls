@@ -16,8 +16,13 @@
     >
       <Header />
       <router-view
+        v-slot="{ Component }"
         @updateContentPosition="updateContentPosition"
-      />
+      >
+        <transition name="router-fade" mode="out-in">
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
     </div>
 
     <transition name="fade">

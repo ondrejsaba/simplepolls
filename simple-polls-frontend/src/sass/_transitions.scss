@@ -1,14 +1,20 @@
 // fade
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from, .fade-leave-to,
+.router-fade-enter-from, .router-fade-leave-to {
     opacity: 0;
 }
 
-.fade-enter-to, .fade-leave-from {
+.fade-enter-to, .fade-leave-from,
+.router-fade-enter-to, .router-fade-leave-from {
     opacity: 1;
 }
 
 .fade-enter-active, .fade-leave-active {
     transition: opacity 0.1s ease;
+}
+
+.router-fade-enter-active, .router-fade-leave-active {
+    transition: all 0.25s ease;
 }
 
 .fade-leave-active {
