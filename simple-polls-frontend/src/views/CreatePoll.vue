@@ -125,7 +125,7 @@ export default {
             this.$emit('updateContentPosition')
         },
         createPoll() {
-            if (this.formIsValid) {
+            if (this.formIsValid && this.noDuplicateOptions) {
                 let pollVotes = {}
                 this.options.forEach(option => {
                     pollVotes[option] = 0
@@ -164,6 +164,17 @@ export default {
 
                     this.setShowModal()
                 })
+            } else if (!this.noDuplicateOptions && this.formIsValid) {
+                console.log(this.options.length)
+
+                this.setModalOptions({
+                    component: 'MessageModal',
+                    title: 'Error',
+                    message: 'Please remove any duplicate options.',
+                    width: '400px'
+                })
+
+                this.setShowModal()
             } else {
                 this.setModalOptions({
                     component: 'MessageModal',
@@ -190,6 +201,21 @@ export default {
             })
 
             return validOptions >= 2
+        },
+        noDuplicateOptions() {
+            let duplicateOptions = 0
+
+            this.options.forEach(option => {
+                const optionCount = this.options.filter(filterOption => {
+                    return filterOption == option
+                }).length
+
+                if (optionCount > 1) {
+                    duplicateOptions += 1
+                }
+            })
+
+            return duplicateOptions == 0
         }
     },
     mounted() {
