@@ -37,6 +37,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/variables";
+@import "../sass/mediaqueries";
 
 .btn {
     display: inline-block;
@@ -44,6 +45,7 @@ export default {
     height: 40px;
     line-height: 40px;
     text-align: center;
+    font-size: 18px;
     padding: 0 10px 0 10px;
     border-radius: 4px;
     cursor: pointer;
@@ -125,6 +127,17 @@ export default {
 
         span.material-icons {
             line-height: 50px;
+        }
+    }
+
+    @include mobile-s {
+        height: 32px;
+        line-height: 32px;
+        font-size: 14px;
+
+        span.material-icons {
+            line-height: 32px !important;
+            font-size: 18px;
         }
     }
 }

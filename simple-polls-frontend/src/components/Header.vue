@@ -75,6 +75,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/variables";
+@import "../sass/mediaqueries";
 
 header {
     overflow: hidden;
@@ -100,6 +101,19 @@ header {
 
         #title a {
             color: light(100);
+        }
+    }
+
+    @include mobile-s {
+        ul li {
+            height: 32px;
+            line-height: 32px;
+
+            .btn {
+                width: 32px !important;
+                height: 32px !important;
+                line-height: 32px !important;
+            }
         }
     }
 }
@@ -135,6 +149,11 @@ header {
         height: 100%;
         background-color: #E53935;
     }
+
+    @include mobile-s {
+        width: 32px;
+        height: 32px;
+    }
 }
 
 #title {
@@ -144,6 +163,10 @@ header {
     a {
         text-decoration: none;
         color: dark(400);
+    }
+
+    @include mobile-s {
+        font-size: 20px;
     }
 }
 </style>
