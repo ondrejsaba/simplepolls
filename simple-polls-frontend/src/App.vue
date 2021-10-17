@@ -36,18 +36,24 @@
     <transition name="modal">
       <Modal v-if="showModal" />
     </transition>
+
+    <GlobalEvents
+      @keyup.esc="closeModal"
+    />
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
 import Modal from '@/components/Modal.vue'
+import { GlobalEvents } from 'vue-global-events'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
     Header,
-    Modal
+    Modal,
+    GlobalEvents
   },
   data() {
     return {
@@ -58,6 +64,11 @@ export default {
     ...mapMutations('theme', ['syncTheme']),
     ...mapMutations('modal', ['setShowModal']),
 
+    closeModal() {
+      if (this.showModal) {
+        this.setShowModal()
+      }
+    },
     updateContentPosition() {
       setTimeout(() => {
         const viewHeight = window.innerHeight
