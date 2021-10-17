@@ -165,8 +165,6 @@ export default {
                     this.setShowModal()
                 })
             } else if (!this.noDuplicateOptions && this.formIsValid) {
-                console.log(this.options.length)
-
                 this.setModalOptions({
                     component: 'MessageModal',
                     title: 'Error',
@@ -200,7 +198,7 @@ export default {
                 }
             })
 
-            return validOptions >= 2
+            return validOptions >= 2 && this.question.length
         },
         noDuplicateOptions() {
             let duplicateOptions = 0
