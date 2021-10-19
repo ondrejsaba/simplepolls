@@ -20,6 +20,7 @@
                 v-for="(option, index) in pollData.options"
                 v-model="selectedBoxes[option]"
                 :checked-prop="selectedBoxes[option]"
+                :accent-color="accentColor"
                 :key="index"
                 @click="selectOption(option)"
             >
@@ -29,6 +30,7 @@
 
         <Button
             :ignore-color-mode="true"
+            :accent-color="accentColor"
             class="primary mt-20"
             @click="submitVote"
         >
@@ -81,7 +83,9 @@ export default {
             pollExists: false,
 
             pollData: {},
-            selectedBoxes: {}
+            selectedBoxes: {},
+
+            accentColor: '#2b64ff'
         }
     },
     methods: {
@@ -101,6 +105,8 @@ export default {
                         options: JSON.parse(options),
                         settings: JSON.parse(settings)
                     }
+
+                    this.accentColor = JSON.parse(settings).accentColor
 
                     this.pollData.options.forEach(option => {
                         this.selectedBoxes[option] = false
@@ -232,6 +238,7 @@ export default {
         font-weight: 500;
         border-bottom: 1px solid light(200);
         box-sizing: border-box;
+        transition: border 0.1s ease;
     }
 
     #vote-form {
@@ -239,6 +246,7 @@ export default {
         padding: 20px;
         border-bottom: 1px solid light(200);
         box-sizing: border-box;
+        transition: border 0.1s ease;
     }
 
     &.dark {

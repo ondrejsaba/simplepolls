@@ -119,6 +119,8 @@ body {
     background-color: dark(100);
     color: light(100);
   }
+
+  transition: background-color 0.1s ease;
 }
 
 #dim-box {
@@ -138,6 +140,7 @@ body {
   border: 1px solid light(200);
   box-shadow: 2px 2px 32px rgba(light(300), 0.25);
   padding: 20px;
+  transition: border 0.1s ease;
 
   &.dark {
     border: 1px solid dark(300);

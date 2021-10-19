@@ -75,11 +75,11 @@
 
             <Accordion>
                 <template v-slot:title>
-                    Color accent
+                    Accent color
                 </template>
 
                 <template v-slot:content>
-                    Color selection
+                    <ColorSelection v-model="settings.accentColor" />
                 </template>
             </Accordion>
         </div>
@@ -106,20 +106,23 @@
 import Button from '@/components/Button.vue'
 import Checkbox from '@/components/Checkbox.vue'
 import Accordion from '@/components/Accordion.vue'
+import ColorSelection from '@/components/ColorSelection.vue'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
         Button,
         Checkbox,
-        Accordion
+        Accordion,
+        ColorSelection
     },
     data() {
         return {
             question: '',
             options: [],
             settings: {
-                multipleChoices: false
+                multipleChoices: false,
+                accentColor: '#2b64ff'
             }
         }
     },
@@ -245,6 +248,7 @@ export default {
 
 #new-poll-form {
     padding: 20px 0 20px 0;
+    transition: border 0.1s ease;
 
     label, input[type=text] {
         display: block;
@@ -296,6 +300,7 @@ export default {
 #new-poll-settings {
     padding: 20px 0 20px 0;
     color: dark(100);
+    transition: border 0.1s ease;
     user-select: none;
 
     h2 {

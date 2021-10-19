@@ -14,11 +14,7 @@
 }
 
 .router-fade-enter-active, .router-fade-leave-active {
-    transition: all 0.25s ease;
-}
-
-.fade-leave-active {
-    transition-delay: 0.1s;
+    transition: opacity 0.25s ease;
 }
 
 // modal

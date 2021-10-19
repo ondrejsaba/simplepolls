@@ -30,4 +30,8 @@ input[type=text], input[type=password] {
             color: light(200);
         }
     }
+
+    transition-property: border, background-color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease;
 }

@@ -82,6 +82,9 @@ header {
     border-bottom: 1px solid light(200);
     padding-bottom: 25px;
     background-color: light(100);
+    transition-property: background-color border;
+    transition-duration: 0.1s;
+    transition-timing-function: ease;
     user-select: none;
 
     ul {

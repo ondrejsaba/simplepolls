@@ -11,6 +11,9 @@
             :class="{
                 active: checked || checkedProp
             }"
+            :style="{
+                backgroundColor: checkedColor
+            }"
         >
             <span class="material-icons" v-if="checked || checkedProp">
                 check
@@ -32,6 +35,11 @@ export default {
         checkedProp: {
             type: Boolean,
             default: null
+        },
+        accentColor: {
+            type: String,
+            required: false,
+            default: '#2b64ff'
         }
     },
     data() {
@@ -50,7 +58,11 @@ export default {
     computed: {
         ...mapState('theme', [
             'darkTheme'
-        ])
+        ]),
+
+        checkedColor() {
+            return this.checked || this.checkedProp ? this.accentColor : ''
+        }
     }
 }
 </script>
@@ -73,6 +85,7 @@ export default {
         border: 1px solid light(200);
         box-sizing: border-box;
         text-align: center;
+        transition: all 0.1s ease;
 
         span.material-icons {
             position: absolute;

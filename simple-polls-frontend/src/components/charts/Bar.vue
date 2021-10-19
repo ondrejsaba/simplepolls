@@ -10,7 +10,7 @@
             v-for="(votes, name) in data"
             :key="name"
         >
-            <p class="item-details">
+            <div class="item-details">
                 <div class="name">
                     {{ name }}
                 </div>
@@ -18,7 +18,7 @@
                 <div class="votes">
                     {{ votePercentage(votes) }} ({{ votes }} votes)
                 </div>
-            </p>
+            </div>
 
             <div class="bar">
                 <div
@@ -139,9 +139,11 @@ export default {
             border: 1px solid light(200);
             box-sizing: border-box;
             background-color: lighten(light(200), 5%);
+            transition: all 0.1s ease;
 
             .bar-fill {
                 height: 100%;
+                transition: all 0.1s ease;
             }
         }
     }

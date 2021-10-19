@@ -40,7 +40,11 @@
                     }
                 }"
             >
-                <Button class="primary" :ignore-color-mode="true">
+                <Button
+                    class="primary"
+                    :ignore-color-mode="true"
+                    :accent-color="accentColor"
+                >
                     <template v-slot:text>
                         {{ totalVotes > 0 ? 'Create a new poll' : 'Vote' }}
                     </template>
@@ -92,7 +96,8 @@ export default {
 
             // colors
             colorsList: ['#FFEB3B', '#03A9F4', '#E53935', '#8BC34A', '#FB8C00', '#7E57C2', '#E91E63', '#3F51B5'],
-            barColors: {}
+            barColors: {},
+            accentColor: '#2b64ff'
         }
     },
     methods: {
@@ -102,12 +107,14 @@ export default {
             fetch('http://localhost:3000/results/' + this.$route.params.id)
                 .then(response => response.json())
                 .then(data => {
-                    const {question, votes} = data.results
+                    const {question, votes, settings} = data.results
 
                     this.pollData = {
                         question,
                         votes: JSON.parse(votes)
                     }
+
+                    this.accentColor = JSON.parse(settings).accentColor
                 })
         },
         copyLink() {
@@ -184,6 +191,7 @@ export default {
 
 #results {
     color: dark(100);
+    transition: color 0.1s ease;
     user-select: none;
 
     h2#results-title {
@@ -201,6 +209,7 @@ export default {
         border-bottom: 1px solid light(200);
         font-weight: 500;
         font-size: 18px;
+        transition: border 0.1s ease;
     }
 
     #results-charts, #no-votes {

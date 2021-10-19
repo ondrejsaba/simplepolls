@@ -40,3 +40,9 @@ $sizes: 0, 5, 10, 15, 20, 25, 30, 40, 50, 100;
         }
     }
 }
+
+// rotation
+
+.rotate180 {
+    transform: rotate(180deg);
+}

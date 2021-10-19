@@ -5,6 +5,9 @@
             light: !darkTheme && !ignoreColorMode,
             dark: darkTheme && !ignoreColorMode
         }"
+        :style="{
+            backgroundColor: ignoreColorMode && accentColor ? accentColor : ''
+        }"
     >
         <slot name="text"></slot>
 
@@ -25,7 +28,14 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        ignoreColorMode: Boolean
+        ignoreColorMode: {
+            type: Boolean,
+            required: false
+        },
+        accentColor: {
+            type: String,
+            required: false
+        }
     },
     computed: {
         ...mapState('theme', [
@@ -48,6 +58,7 @@ export default {
     font-size: 18px;
     padding: 0 10px 0 10px;
     border-radius: 4px;
+    transition: all 0.1s ease;
     cursor: pointer;
     user-select: none;
 
