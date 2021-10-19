@@ -72,6 +72,16 @@
                     Allow multiple choices
                 </Checkbox>
             </div>
+
+            <Accordion>
+                <template v-slot:title>
+                    Color accent
+                </template>
+
+                <template v-slot:content>
+                    Color selection
+                </template>
+            </Accordion>
         </div>
 
         <div id="new-poll-btns">
@@ -95,12 +105,14 @@
 <script>
 import Button from '@/components/Button.vue'
 import Checkbox from '@/components/Checkbox.vue'
+import Accordion from '@/components/Accordion.vue'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
         Button,
-        Checkbox
+        Checkbox,
+        Accordion
     },
     data() {
         return {
