@@ -18,7 +18,7 @@ A simple polling app made with Vue and Node.js + Express.
 ![New form](https://i.imgur.com/gt9pq9H.png)
 
 ### Poll results
-![Poll results](https://i.imgur.com/quWfK6i.png)
+![Poll results](https://i.imgur.com/Rg7ty6Z.png)
 
 ## Production
 ```
