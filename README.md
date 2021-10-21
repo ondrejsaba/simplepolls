@@ -1,7 +1,10 @@
 <p align="center">
     <img src="https://i.imgur.com/d8zRlaH.png" alt="Logo">
 </p>
+
+<p align="center">
 A simple polling app made with Vue and Node.js + Express.
+</p>
 
 ## Features
 - Easy to use, simple interface
